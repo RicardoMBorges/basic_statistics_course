@@ -490,7 +490,7 @@ with c1:
         st.success("Example dataset loaded.")
 
 with c2:
-    uploaded = st.file_uploader("Upload CSV file", type=["csv"],help="Upload a CSV table containing your analytical data. Ideally include numeric columns for measurements and categorical columns for groups.")
+    uploaded = st.sidebar.file_uploader("Upload CSV file", type=["csv"],help="Upload a CSV table containing your analytical data. Ideally include numeric columns for measurements and categorical columns for groups.")
 
     if uploaded is not None:
         df_up = pd.read_csv(uploaded)
