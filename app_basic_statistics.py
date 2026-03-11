@@ -22,21 +22,17 @@ st.set_page_config(
 # -----------------------------
 # LOGOs (optional)
 # -----------------------------
+
 STATIC_DIR = Path(__file__).parent / "static"
-
-logos = ["LAABio.png", "Basic_Statistics_Course.png"]
-
-col1, col2 = st.columns(2)
-
-for col, logo_name in zip([col1, col2], logos):
+for logo_name in ["LAABio.png", "Basic_Statistics_Course.png"]:
     p = STATIC_DIR / logo_name
     try:
         from PIL import Image
-        img = Image.open(p)
-        with col:
-            st.image(img, width=400)
+        st.sidebar.image(Image.open(p), use_container_width=True)
     except Exception:
         pass
+
+st.sidebar.divider()
 
 # =========================================================
 # Helpers
@@ -455,7 +451,6 @@ st.caption("""
 
 
 tabs = st.tabs([
-    "Import Data",
     "Explore Data",
     "Descriptive Statistics",
     "Distributions",
@@ -470,15 +465,14 @@ tabs = st.tabs([
 ])
 
 # =========================================================
-# Tab 1 - Import
+# Sidebar - Import
 # =========================================================
 
-with tabs[0]:
-    st.header("Import Data")
+st.sidebar.header("Import Data")
 
-    add_help_text(
-        "Import Data",
-        """
+add_help_text(
+    "Import Data",
+    """
 This section allows you to either:
 
 - upload your own CSV file, or
@@ -486,34 +480,34 @@ This section allows you to either:
 
 This is useful in class because you can start demonstrating the concepts immediately.
 """
-    )
+)
 
-    c1, c2 = st.columns([1, 1])
+c1, c2 = st.columns([1, 1])
 
-    with c1:
-        if st.button("Load example dataset (A and B, 10 replicates each)", use_container_width=True,help="Load a built-in example dataset with two groups and 10 replicates each for quick classroom demonstrations."):
-            st.session_state["df"] = generate_example_dataset()
-            st.success("Example dataset loaded.")
+with c1:
+    if st.sidebar.button("Load example dataset (A and B, 10 replicates each)", use_container_width=True,help="Load a built-in example dataset with two groups and 10 replicates each for quick classroom demonstrations."):
+        st.session_state["df"] = generate_example_dataset()
+        st.success("Example dataset loaded.")
 
-    with c2:
-        uploaded = st.file_uploader("Upload CSV file", type=["csv"],help="Upload a CSV table containing your analytical data. Ideally include numeric columns for measurements and categorical columns for groups.")
+with c2:
+    uploaded = st.file_uploader("Upload CSV file", type=["csv"],help="Upload a CSV table containing your analytical data. Ideally include numeric columns for measurements and categorical columns for groups.")
 
-        if uploaded is not None:
-            df_up = pd.read_csv(uploaded)
-            st.session_state["df"] = df_up
-            st.success("CSV uploaded successfully.")
+    if uploaded is not None:
+        df_up = pd.read_csv(uploaded)
+        st.sidebar.session_state["df"] = df_up
+        st.sidebar.success("CSV uploaded successfully.")
 
-    df = st.session_state["df"]
+#df = st.sidebar.session_state["df"]
 
-    if df is not None:
-        st.subheader("Current dataset")
-        st.dataframe(df, use_container_width=True)
+#if df is not None:
+#    st.sidebar.subheader("Current dataset")
+#    st.sidebar.dataframe(df, use_container_width=True)
 
 # =========================================================
-# Tab 2 - Explore
+# Tab 1 - Explore
 # =========================================================
 
-with tabs[1]:
+with tabs[0]:
     st.header("Explore Data")
 
     df = st.session_state["df"]
@@ -551,10 +545,10 @@ Before calculating anything, inspect:
             st.dataframe(df[num_cols].describe().T, use_container_width=True)
 
 # =========================================================
-# Tab 3 - Descriptive Statistics
+# Tab 2 - Descriptive Statistics
 # =========================================================
 
-with tabs[2]:
+with tabs[1]:
     st.header("Descriptive Statistics")
 
     df = st.session_state["df"]
@@ -618,10 +612,10 @@ Main parameters:
                 st.dataframe(pd.DataFrame([stats_all]).T.rename(columns={0: "Value"}), use_container_width=True)
 
 # =========================================================
-# Tab 4 - Distributions
+# Tab 3 - Distributions
 # =========================================================
 
-with tabs[3]:
+with tabs[2]:
     st.header("Distributions")
 
     df = st.session_state["df"]
@@ -768,10 +762,10 @@ This section lets you see:
             st.dataframe(out[cols], use_container_width=True)
 
 # =========================================================
-# Tab 5 - Boxplots
+# Tab 4 - Boxplots
 # =========================================================
 
-with tabs[4]:
+with tabs[3]:
     st.header("Boxplots & Outliers")
 
     df = st.session_state["df"]
@@ -833,10 +827,10 @@ This is often one of the fastest ways to compare groups visually.
             st.plotly_chart(fig_violin, use_container_width=True)
 
 # =========================================================
-# Tab 6 - Hypothesis testing
+# Tab 5 - Hypothesis testing
 # =========================================================
 
-with tabs[5]:
+with tabs[4]:
     st.header("Hypothesis Testing")
 
     df = st.session_state["df"]
@@ -946,10 +940,10 @@ For two independent groups, you can inspect:
                 st.plotly_chart(fig_compare, use_container_width=True)
 
 # =========================================================
-# Tab 7 - Normal Distribution Simulator
+# Tab 6 - Normal Distribution Simulator
 # =========================================================
 
-with tabs[6]:
+with tabs[5]:
     st.header("Normal Distribution Simulator")
 
     add_help_text(
@@ -1087,11 +1081,10 @@ This is useful to show:
     st.dataframe(pd.DataFrame([ds]).T.rename(columns={0: "Value"}), use_container_width=True)
 
 
-
 #  =========================================================
-# Tab 8 - Sampling & CLT
+# Tab 7 - Sampling & CLT
 # =========================================================
-with tabs[7]:
+with tabs[6]:
     st.header("Sampling & Central Limit Theorem")
 
     add_help_text(
@@ -1136,10 +1129,10 @@ This is one of the most important ideas in statistics.
     st.write("SD of sample means (standard error):", round(np.std(sample_means, ddof=1), 4))
 
 # =========================================================
-# Tab 9 - Confidence Interval Visualizer
+# Tab 8 - Confidence Interval Visualizer
 # =========================================================
 
-with tabs[8]:
+with tabs[7]:
     st.header("Confidence Interval Visualizer")
 
     add_help_text(
@@ -1212,10 +1205,10 @@ This tab helps you show how:
         st.warning("Need at least two observations.")
 
 # =========================================================
-# Tab 10 - ANOVA
+# Tab 9 - ANOVA
 # =========================================================
 
-with tabs[9]:
+with tabs[8]:
     st.header("ANOVA")
 
     add_help_text(
@@ -1353,10 +1346,10 @@ This section automatically detects how many groups are present in the selected g
 
 
 # =========================================================
-# Tab 11 - Correlation & Regression
+# Tab 9 - Correlation & Regression
 # =========================================================
 
-with tabs[10]:
+with tabs[9]:
     st.header("Correlation & Regression")
 
     add_help_text(
@@ -1429,10 +1422,10 @@ You can:
         st.dataframe(reg_df, use_container_width=True)
 
 # =========================================================
-# Tab 12 - Analytical Errors
+# Tab 10 - Analytical Errors
 # =========================================================
 
-with tabs[11]:
+with tabs[10]:
     st.header("Errors in Analytical Chemistry")
 
     add_help_text(
