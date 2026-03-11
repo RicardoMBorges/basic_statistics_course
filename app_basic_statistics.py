@@ -42,6 +42,10 @@ def add_help_text(title: str, text: str):
     with st.expander(f"Help — {title}", expanded=False):
         st.markdown(text)
 
+def add_help_text_sidebar(title: str, text: str):
+    with st.sidebar.expander(f"Help — {title}", expanded=False):
+        st.sidebar.markdown(text)
+
 def generate_example_dataset(seed: int = 42) -> pd.DataFrame:
     """
     Generate a larger example dataset with three groups (A, B, C),
@@ -470,7 +474,7 @@ tabs = st.tabs([
 
 st.sidebar.header("Import Data")
 
-sidebar.add_help_text(
+add_help_text_sidebar(
     "Import Data",
     """
 This section allows you to either:
@@ -1556,5 +1560,6 @@ distribution of replicate measurements.
 - **Random error** mainly affects precision.
 """
     )
+
 
 
