@@ -470,7 +470,7 @@ tabs = st.tabs([
 
 st.sidebar.header("Import Data")
 
-add_help_text(
+sidebar.add_help_text(
     "Import Data",
     """
 This section allows you to either:
@@ -1556,4 +1556,5 @@ distribution of replicate measurements.
 - **Random error** mainly affects precision.
 """
     )
+
 
