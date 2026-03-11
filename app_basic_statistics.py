@@ -44,7 +44,7 @@ def add_help_text(title: str, text: str):
 
 def add_help_text_sidebar(title: str, text: str):
     with st.sidebar.expander(f"Help — {title}", expanded=False):
-        st.sidebar.markdown(text)
+        st.markdown(text)
 
 def generate_example_dataset(seed: int = 42) -> pd.DataFrame:
     """
@@ -1560,6 +1560,7 @@ distribution of replicate measurements.
 - **Random error** mainly affects precision.
 """
     )
+
 
 
 
