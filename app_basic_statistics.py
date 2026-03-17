@@ -43,7 +43,7 @@ with c1:
     st.link_button("🇧🇷 Português", "https://curso-de-estatistica-basica.streamlit.app/")
 
 with c2:
-    st.link_button("🇬🇧/🇺🇸 English", "https://basic-statistics-course.streamlit.app/")
+    st.link_button("🇬🇧 🇺🇸 English", "https://basic-statistics-course.streamlit.app/")
 
 # =========================================================
 # Helpers
