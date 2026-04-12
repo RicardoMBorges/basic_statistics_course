@@ -1430,7 +1430,8 @@ You can:
         st.plotly_chart(fig, use_container_width=True)
 
         reg_df = pd.DataFrame([reg]).T.rename(columns={0: "Value"})
-        reg_df.loc["p_value", "Value"] = f"{reg_df.loc['p_value', 'Value']:.3e}"
+        reg_df["Display"] = reg_df["Value"].copy()
+        reg_df.loc["p_value", "Display"] = f"{reg_df.loc['p_value', 'Value']:.3e}"
         st.subheader("Regression summary")
         st.dataframe(reg_df, use_container_width=True)
 
