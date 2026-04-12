@@ -1430,10 +1430,17 @@ You can:
         st.plotly_chart(fig, use_container_width=True)
 
         reg_df = pd.DataFrame([reg]).T.rename(columns={0: "Value"})
-        reg_df["Display"] = reg_df["Value"].copy()
+        reg_df["Display"] = reg_df["Value"].astype(object)
+
+        reg_df.loc["slope", "Display"] = f"{reg_df.loc['slope', 'Value']:.6f}"
+        reg_df.loc["intercept", "Display"] = f"{reg_df.loc['intercept', 'Value']:.6f}"
+        reg_df.loc["r_value", "Display"] = f"{reg_df.loc['r_value', 'Value']:.6f}"
+        reg_df.loc["r_squared", "Display"] = f"{reg_df.loc['r_squared', 'Value']:.6f}"
         reg_df.loc["p_value", "Display"] = f"{reg_df.loc['p_value', 'Value']:.3e}"
-        st.subheader("Regression summary")
-        st.dataframe(reg_df, use_container_width=True)
+        reg_df.loc["std_err", "Display"] = f"{reg_df.loc['std_err', 'Value']:.6f}"
+
+st.subheader("Regression summary")
+st.dataframe(reg_df[["Display"]], use_container_width=True)
 
 # =========================================================
 # Tab 10 - Analytical Errors
